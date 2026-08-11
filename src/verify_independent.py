@@ -6,7 +6,9 @@ import csv
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-SAMPLE = ROOT / "data" / "verification_sample.csv"
+FULL_SAMPLE = ROOT / "data" / "verification_sample.csv"
+SMOKE_SAMPLE = ROOT / "data" / "verification_smoke_sample.csv"
+SAMPLE = FULL_SAMPLE if FULL_SAMPLE.exists() else SMOKE_SAMPLE
 
 
 def largest_prime_factor(n: int) -> int:

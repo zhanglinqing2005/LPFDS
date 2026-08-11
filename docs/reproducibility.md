@@ -10,12 +10,12 @@ From the repository root:
 python -m venv .venv
 source .venv/bin/activate  # Windows: .\.venv\Scripts\Activate.ps1
 pip install -r requirements.txt
-python src/check_archived_results.py
+python src/check_repository_results.py
 python src/verify_independent.py
 python src/standard_orbit_reproduce.py
 ```
 
-`check_archived_results.py` validates the archived 9,999,999-seed depth array and its histogram without rerunning the complete scan. `verify_independent.py` recomputes 2,014 fixed seeds using trial division rather than the sieve implementation. `standard_orbit_reproduce.py` regenerates the exact standard-orbit appearance-index data and the historical OLS summary.
+`check_repository_results.py` validates the compact histogram and frozen summary stored in GitHub. The full per-seed depth array is retained in the frozen reproducibility archive for Zenodo deposition. `verify_independent.py` recomputes the fixed GitHub smoke sample using trial division rather than the sieve implementation; when the full 2,014-seed archive sample is present, the same script automatically uses it instead. `standard_orbit_reproduce.py` regenerates the exact standard-orbit appearance-index data and the historical OLS summary.
 
 ## Full exhaustive scan
 

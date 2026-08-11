@@ -39,9 +39,9 @@ All 9,999,999 tested seeds entered the proven attraction region; the maximum obs
 - `data/seed_depth_counts.csv` / `data/seed_scan_summary.txt` — compact full-scan summary stored directly in GitHub.
 - The full per-seed array `seed_depths_uint8.npz` is retained in the frozen reproducibility ZIP for Zenodo deposition rather than duplicated in GitHub.
 - The 78,499-row appearance-index dataset is regenerated deterministically by `src/standard_orbit_reproduce.py` and is included in the frozen Zenodo-ready archive.
-- `data/verification_sample.csv` — fixed independent verification sample.
+- `data/verification_smoke_sample.csv` — compact independent-verification sample for GitHub CI; the full 2,014-seed sample is in the frozen Zenodo-ready archive.
 - `data/prime_plateaus_first80.csv` — data for the first plateau figure.
-- `figures/` — publication figures corresponding to the final content-freeze manuscript.
+- Full-resolution publication figures are retained in the frozen reproducibility ZIP; the compact GitHub repository focuses on executable code and lightweight tabular checks.
 - `docs/prior_art_audit_2026-08-12.md` — scope and conclusions of the final prior-art audit.
 - `docs/reproducibility.md` — exact fast-check and full-rerun instructions.
 - `environment.txt` — environment used for the archived final run.

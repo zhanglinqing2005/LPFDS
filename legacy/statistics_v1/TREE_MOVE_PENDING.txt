@@ -1,1 +1,0 @@
-Binary history archival uses Git object-tree operations to preserve original blobs without re-uploading them.

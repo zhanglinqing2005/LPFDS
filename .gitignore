@@ -1,16 +1,10 @@
-# Python缓存文件（不用上传）
 __pycache__/
-*.pyc
-*.pyo
-
-# 运行结果文件夹
-# 如果你想上传结果，就把下面这行前面加个#号注释掉
-LPFDS_Result/
-
-# 系统自带的隐藏文件
+*.py[cod]
+.venv/
+venv/
+.env
 .DS_Store
 Thumbs.db
-
-# 编辑器配置文件
-.vscode/
-.idea/
+*.tmp
+*.log
+LPFDS_Result/

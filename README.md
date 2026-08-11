@@ -33,12 +33,12 @@ All 9,999,999 tested seeds entered the proven attraction region; the maximum obs
 
 - `src/seed_scan_archive.py` — exhaustive general-seed scan using a largest-prime-factor sieve.
 - `src/verify_independent.py` — independent trial-division verification on a fixed sample.
-- `src/check_archived_results.py` — fast integrity checks for the archived full-scan dataset.
+- `src/check_repository_results.py` — fast integrity checks for the compact GitHub results.
 - `src/standard_orbit_reproduce.py` — exact standard-orbit appearance-index reproduction and historical OLS summary.
 - `src/make_verification_sample.py` — creates the fixed verification sample.
-- `data/seed_depths_uint8.npz` — compressed certification depth for every seed 2..10,000,000.
-- `data/seed_depth_counts.csv` — depth histogram.
-- `data/appearance_indices_up_to_1000003.csv` — exact appearance indices for 78,499 primes through 1,000,003.
+- `data/seed_depth_counts.csv` / `data/seed_scan_summary.txt` — compact full-scan summary stored directly in GitHub.
+- The full per-seed array `seed_depths_uint8.npz` is retained in the frozen reproducibility ZIP for Zenodo deposition rather than duplicated in GitHub.
+- The 78,499-row appearance-index dataset is regenerated deterministically by `src/standard_orbit_reproduce.py` and is included in the frozen Zenodo-ready archive.
 - `data/verification_sample.csv` — fixed independent verification sample.
 - `data/prime_plateaus_first80.csv` — data for the first plateau figure.
 - `figures/` — publication figures corresponding to the final content-freeze manuscript.
@@ -63,7 +63,7 @@ pip install -r requirements.txt
 For a fast verification of the archived results, run:
 
 ```bash
-python src/check_archived_results.py
+python src/check_repository_results.py
 python src/verify_independent.py
 python src/standard_orbit_reproduce.py
 ```

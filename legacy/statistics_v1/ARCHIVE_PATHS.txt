@@ -1,1 +1,0 @@
-This directory is the archival destination for the four historical SPSS/PDF outputs formerly stored at repository root.

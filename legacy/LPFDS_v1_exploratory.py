@@ -13,7 +13,6 @@ RESULT_DIR = "LPFDS_Result"
 if not os.path.exists(RESULT_DIR):
     os.makedirs(RESULT_DIR)
 
-
 trajectory_file = os.path.join(RESULT_DIR, "trajectory.csv")
 summary_file = os.path.join(RESULT_DIR, "summary.txt")
 counter_file = os.path.join(RESULT_DIR, "counterexample.txt")
@@ -85,7 +84,7 @@ def next_prime(p):
 # 参数设置
 # ====================================
 
-MAX_A = 10**12          # 改成了论文中的 10^12
+MAX_A = 10**12
 
 a = 2
 n = 0
@@ -95,7 +94,7 @@ violation1 = 0
 violation2 = 0
 
 prime_set = set()
-prime_first_index = {}   # 新增：记录首次出现位置
+prime_first_index = {}
 
 start_time = time.time()
 
@@ -115,17 +114,12 @@ with open(trajectory_file, "w", newline="") as f:
             print(f"Running: n={n}, a={a}, p={p}")
 
         n += 1
-
         writer.writerow([n, a, p])
 
-        # 记录首次出现
         if p not in prime_set:
             prime_first_index[p] = n
         prime_set.add(p)
 
-        # -----------------------
-        # 猜想1检测
-        # -----------------------
         if last_p != 0 and p < last_p:
             violation1 += 1
             with open(counter_file, "a") as cf:
@@ -137,9 +131,6 @@ current prime={p}
 a={a}
 """)
 
-        # -----------------------
-        # 猜想2检测
-        # -----------------------
         if last_p != 0 and p > last_p:
             expected = next_prime(last_p)
             if p != expected:
@@ -157,33 +148,17 @@ a={a}
         last_p = p
         a = a + p
 
-
 end_time = time.time()
-
-
-# ====================================
-# 保存出现质数列表
-# ====================================
 
 with open(prime_file, "w") as f:
     for p in sorted(prime_set):
         f.write(str(p) + "\n")
-
-
-# ====================================
-# 保存首次出现位置（新增）
-# ====================================
 
 with open(first_appearance_file, "w", newline="") as f:
     writer = csv.writer(f)
     writer.writerow(["prime", "first_index"])
     for p in sorted(prime_first_index.keys()):
         writer.writerow([p, prime_first_index[p]])
-
-
-# ====================================
-# 保存实验摘要
-# ====================================
 
 max_p = max(prime_set) if prime_set else 0
 
@@ -212,7 +187,6 @@ Runtime seconds: {end_time - start_time:.2f}
 Conclusion:
 No counterexample detected within the tested range.
 """)
-
 
 print("Experiment finished")
 print(f"Summary saved to: {summary_file}")

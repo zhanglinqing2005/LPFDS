@@ -1,0 +1,11 @@
+seed_min=2
+seed_max=10000000
+seed_count=9999999
+depth_zero_count=7283427
+depth_zero_fraction=0.7283427728342773
+mean_depth=1.3401832340183235
+median_depth=0
+max_depth=57
+max_depth_seeds=[4415366]
+max_depth_state=(4495501, 2999, 1499)
+max_state_visited_before_certificate=10058651

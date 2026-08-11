@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "If you use this repository, cite the accompanying manuscript and the archived Zenodo release once available."
+title: "LPFDS reproducibility package: largest-prime-factor recurrence and general-seed dynamics"
+type: dataset
+authors:
+  - family-names: Zhang
+    given-names: Linqing
+    email: 1844856955@qq.com
+version: "0.9.0"
+keywords:
+  - largest prime factor
+  - recurrence
+  - prime gaps
+  - integer dynamics
+  - experimental mathematics
+repository-code: "https://github.com/zhanglinqing2005/LPFDS"
+license: MIT

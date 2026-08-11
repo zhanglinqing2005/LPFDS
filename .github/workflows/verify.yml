@@ -1,0 +1,19 @@
+name: Reproducibility smoke checks
+
+on:
+  push:
+    branches: [main, manuscript-reproducibility-2026-08-12]
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: pip install -r requirements.txt
+      - run: python src/check_repository_results.py
+      - run: python src/verify_independent.py
+      - run: python src/standard_orbit_reproduce.py

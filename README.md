@@ -1,62 +1,110 @@
-# LPFDS：最大质因子动力系统
+# LPFDS — Largest-prime-factor recurrence
 
-这个代码仓库包含了论文《最大质因子动力系统》的完整源代码和实验数据。
+This repository accompanies the manuscript:
 
-## 项目简介
+**Exact Structure, Prime-Gap Representations, and General-Seed Dynamics in a Largest-Prime-Factor Recurrence**  
+Chinese content-freeze title: **《最大质因子递推的精确结构、素数间隔表示与一般初值动力学》**
 
-我们研究这样一个递推规则：
+Author: Zhang Linqing (张琳清), Henan University of Economics and Law.
 
-a_{n+1} = a_n + P(a_n)
+## Mathematical status
 
-其中 P(a_n) 表示 a_n 的最大质因子。
+We study
 
-由此产生的质因子轨迹 p_n = P(a_n) 被猜想具有以下三个性质：
+\[
+x_{t+1}=x_t+P^+(x_t),
+\]
 
-1. 单调不减（永远不会下降）
-2. 升级时不跳过任何素数（只会从2到3，3到5，5到7这样相邻升级）
-3. 最终覆盖全部素数（所有素数都会出现）
+where \(P^+(n)\) denotes the largest prime factor of \(n\).
 
-## 运行环境要求
+The standard seed \(x_1=2\) is **not a newly discovered sequence**. It is OEIS A036441 and is equivalent, up to indexing, to A076271. Its induced largest-prime-factor plateaus and several directly related index sequences are also already represented by OEIS A076272, A076273, A075527, and A076274.
 
-- Python 3.11 或更高版本
-- 不需要安装任何第三方库只用Python自带的库
+The current manuscript therefore does **not** present the standard-orbit monotonicity / non-skipping / coverage properties as computational conjectures. Those properties follow from the exact prime-block structure.
 
-## 如何运行程序
+The current experimental focus is the **general-seed problem**: for arbitrary integer seed \(m\ge 2\), does the orbit eventually coalesce with the standard seed-2 orbit? The manuscript proves a sufficient attraction criterion and reports an exhaustive deterministic scan of every seed
 
-打开命令行，进入LPFDS文件夹，然后输入：
+\[
+2\le m\le 10{,}000{,}000.
+\]
 
-python lpfds.py
+All 9,999,999 tested seeds entered the proven attraction region; the maximum observed certification depth was 57, uniquely attained by seed 4,415,366. This finite computation supports an open conjecture and is **not** claimed as a proof for all integers.
 
-程序会自动运行，直到 a_n 超过 10^12 时或找到反例时停止，但经检验在实验范围内无反例。
+## Repository layout
 
-## 运行结果
+- `src/seed_scan_archive.py` — exhaustive general-seed scan using a largest-prime-factor sieve.
+- `src/verify_independent.py` — independent trial-division verification on a fixed sample.
+- `src/check_repository_results.py` — fast integrity checks for the compact GitHub results.
+- `src/standard_orbit_reproduce.py` — exact standard-orbit appearance-index reproduction and historical OLS summary.
+- `src/make_verification_sample.py` — creates the fixed verification sample.
+- `data/seed_depth_counts.csv` / `data/seed_scan_summary.txt` — compact full-scan summary stored directly in GitHub.
+- The full per-seed array `seed_depths_uint8.npz` is retained in the frozen reproducibility ZIP for Zenodo deposition rather than duplicated in GitHub.
+- The 78,499-row appearance-index dataset is regenerated deterministically by `src/standard_orbit_reproduce.py` and is included in the frozen Zenodo-ready archive.
+- `data/verification_smoke_sample.csv` — compact independent-verification sample for GitHub CI; the full 2,014-seed sample is in the frozen Zenodo-ready archive.
+- `data/prime_plateaus_first80.csv` — data for the first plateau figure.
+- Full-resolution publication figures are retained in the frozen reproducibility ZIP; the compact GitHub repository focuses on executable code and lightweight tabular checks.
+- `docs/prior_art_audit_2026-08-12.md` — scope and conclusions of the final prior-art audit.
+- `docs/reproducibility.md` — exact fast-check and full-rerun instructions.
+- `environment.txt` — environment used for the archived final run.
+- `CITATION.cff` — citation metadata for software/reproducibility archiving.
 
-所有结果会保存在 LPFDS_Result 文件夹里：
+## Reproduce the computational results
 
-| 文件名 | 内容说明 |
-|--------|----------|
-| trajectory.csv | 完整轨迹，包含 (n, a_n, p_n) 三列 |
-| first_appearance.csv | 每个素数第一次出现的位置 |
-| primes_found.txt | 所有出现过的素数的列表 |
-| counterexample.txt | 如果猜想被违反，会记录在这里 |
-| summary.txt | 实验统计摘要 |
+Recommended environment:
 
-## 关键统计结果
+```bash
+python -m venv .venv
+# Linux/macOS
+source .venv/bin/activate
+# Windows PowerShell
+# .\.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+```
 
-| 指标 | 数值 |
-|------|------|
-| 最大 a_n | 约 10^12 |
-| 总迭代次数 | 632,453 |
-| 发现的不同素数个数 | 37,604 |
-| 猜想一违反次数 | 0 |
-| 猜想二违反次数 | 0 |
+For a fast verification of the archived results, run:
 
-## 数据公开声明
+```bash
+python src/check_repository_results.py
+python src/verify_independent.py
+python src/standard_orbit_reproduce.py
+```
 
-本仓库的所有代码和数据均公开，采用MIT开源协议。
+To rerun the complete 9,999,999-seed exhaustive scan (substantially more expensive), run:
 
-## 引用方式
+```bash
+python src/seed_scan_archive.py
+```
 
-如果你在研究中使用了本代码或数据，请引用：
+Expected key general-seed results:
 
-zhanglinqing张琳清（2026）。《最大质因子动力系统》。预印本。
+- tested seeds: 9,999,999
+- depth-0 seeds: 7,283,427
+- mean certification depth: 1.3401832340183235
+- median depth: 0
+- maximum depth: 57
+- unique maximum-depth seed: 4,415,366
+- certificate state at depth 57: `x=4,495,501`, `P^+(x)=2,999`, cofactor `1,499`, next prime `3,001`
+- maximum state seen before certification: 10,058,651
+
+## Relationship to the historical repository state
+
+Earlier versions of this repository described three properties of the standard seed-2 orbit as conjectures and contained SPSS/PDF regression outputs. The current manuscript proves the standard block structure exactly, so those historical files should be retained only as exploratory history, not as the current evidence base.
+
+Recommended treatment:
+
+- move the old `LPFDS.py` to `legacy/LPFDS_v1_exploratory.py`;
+- move the old SPSS/PDF regression outputs to `legacy/statistics_v1/`;
+- use the scripts under `src/` and datasets under `data/` as the current reproducibility source.
+
+## Release status
+
+This branch/repository state is the manuscript content-freeze reproducibility candidate (`0.9.0`). The immutable `v1.0.0` GitHub/Zenodo release will be created only after the final English LaTeX manuscript, author metadata, and DOI cross-links are frozen.
+
+## Zenodo archival workflow
+
+The repository can be connected to Zenodo and archived by creating a GitHub release. `CITATION.cff` is included so Zenodo can ingest citation metadata. A paper/preprint DOI and a software/reproducibility DOI can be kept as separate, cross-linked research outputs.
+
+For the journal manuscript, cite the final Zenodo preprint DOI if a preprint has been posted, and cite the archived code/software DOI in the Data and Code Availability section once it exists.
+
+## License
+
+Keep the repository's existing MIT license for code unless the author intentionally changes it. Licensing of the manuscript/preprint and data record should be selected explicitly when the Zenodo records are created.

@@ -1,0 +1,7 @@
+prime_samples=78499
+last_prime=1000003
+last_appearance_index=1999984
+ols_slope=1.999996784291
+ols_intercept=-13.200749130646
+pearson_r=0.999999999847
+rmse=10.239176150915
